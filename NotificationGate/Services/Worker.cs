@@ -25,7 +25,7 @@ namespace NotificationGate.Services
                 Console.WriteLine(_configStrings.WatchPath);
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    _filesWatcher.Watch(_configStrings.WatchPath);
+                    await _filesWatcher.Watch(_configStrings.WatchPath);
                 }
             }
             catch (System.ArgumentException ex)

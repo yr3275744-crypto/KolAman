@@ -16,9 +16,8 @@ builder.Services.AddHostedService<Worker>();
 builder.Services.AddSingleton(sp => new ConfigStrings
 {
     BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BOOTSTRAP_SERVERS")!,
-    NotificationGetTopik = Environment.GetEnvironmentVariable("KAFKA_BOOTSTRAP_SERVERS")!,
-    //WatchPath = builder.Environment.ContentRootPath + @Environment.GetEnvironmentVariable("WATCH_PATH")!
-    WatchPath = Path.Combine(builder.Environment.ContentRootPath, "alert-simulator")
+    NotificationGetTopik = Environment.GetEnvironmentVariable("NOTIFICATION_GET_TOPIK")!,
+    WatchPath = Path.Combine(builder.Environment.ContentRootPath, Environment.GetEnvironmentVariable("WATCH_PATH")!)
 });
 builder.Services.AddSingleton<kafkaClient>();
 builder.Services.AddSingleton<FilesWatcher>();

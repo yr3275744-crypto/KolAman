@@ -1,21 +1,30 @@
-﻿using System;
-using System.IO;
+﻿using Confluent.Kafka;
+using Microsoft.Extensions.Logging;
+using NotificationGate.DAL;
+using NotificationGate.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace NotificationGate.Services
 {
     public class FilesWatcher
     {
         private readonly ILogger<FilesWatcher> _logger;
-        public FilesWatcher(ILogger<FilesWatcher> logger)
+        private readonly kafkaClient _kafkaClient;
+        private readonly ConfigStrings _configStrings;
+        public FilesWatcher(ILogger<FilesWatcher> logger,
+            kafkaClient kafkaClient,
+            ConfigStrings configStrings)
         {
             _logger = logger;
+            _kafkaClient = kafkaClient;
+            _configStrings = configStrings;
         }
-        public void Watch(string path)
+        public async Task Watch(string path)
         {
             var watcher = new FileSystemWatcher(path);
             watcher.InternalBufferSize = 65536;
@@ -49,7 +58,7 @@ namespace NotificationGate.Services
             Console.WriteLine($"Changed: {e.FullPath}");
         }
 
-        private static void OnCreated(object sender, FileSystemEventArgs e)
+        private async void OnCreated(object sender, FileSystemEventArgs e)
         {
             string value = $"Created: {e.FullPath}";
             string? valueFolder = Path.GetDirectoryName(e.FullPath);
@@ -58,9 +67,27 @@ namespace NotificationGate.Services
                 Console.WriteLine("error in the folder stracure");
                 return;
             }
-            string notificationFile = Path.Combine(valueFolder, "alert.json");
+            var files = Directory.GetFiles(valueFolder, "*.json");
+            foreach (string file in files)
+            {
+                Console.WriteLine($"file exists: {Path.Exists(file)}, {file}");
+                string content = File.ReadAllText(file);
+                Console.WriteLine($"content: {content}");
+                var result = await _kafkaClient.Producer.ProduceAsync(_configStrings.NotificationGetTopik,
+                    new Message<Null, string> { Value = content });
+                if (result == null || result.Message.Value == null)
+                {
+                    Console.WriteLine($"Somthing get wrong in produce");
+
+                }
+                else
+                {
+                    Console.WriteLine($"Send to kafka: {result.Message.Value}");
+                }
+            }
+            //string notificationFile = Path.Combine(valueFolder, "alert.json");
             
-            Console.WriteLine($"{Path.Exists(notificationFile)}, {notificationFile}");
+            //Console.WriteLine($"{Path.Exists(notificationFile)}, {notificationFile}");
             
         }
     }
