@@ -1,5 +1,7 @@
 import kafka_client
 import elastic_logger
+import clasificate
+import constants
 
 def main():
     elastic_logger.create_index()
