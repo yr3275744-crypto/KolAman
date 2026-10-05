@@ -11,3 +11,8 @@ status_values = ["WAITING"]
 #redis
 host="localhost"
 port=6379
+
+# elastic logger
+elastic_host="http://localhost:9200"
+index_name="classificator-logs"
+level_values= ["INFO", "WARNING", "ERROR", "CRITICAL"]
