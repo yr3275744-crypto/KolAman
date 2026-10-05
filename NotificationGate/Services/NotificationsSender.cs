@@ -1,4 +1,7 @@
-﻿using Confluent.Kafka;
+﻿// TODO: check if the hebro content is fine, and if not how decode it
+// send logs to elastic!!
+
+using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
 using NotificationGate.DAL;
 using NotificationGate.Models;

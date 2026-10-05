@@ -51,3 +51,8 @@ services:
       ELASTICSEARCH_HOSTS: "http://elastic:9200"
       # ELASTIC_USER
       # ELASTIC_PASSWORD: example
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
