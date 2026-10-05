@@ -10,9 +10,9 @@ namespace NotificationGate.Services
 {
     public class Worker : BackgroundService
     {
-        private readonly FilesWatcher _filesWatcher;
+        private readonly NotificationsSender _filesWatcher;
         private readonly ConfigStrings _configStrings;
-        public Worker(FilesWatcher filesWatcher,
+        public Worker(NotificationsSender filesWatcher,
             ConfigStrings configStrings)
         {
             _filesWatcher = filesWatcher;

@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace NotificationGate.Services
 {
-    public class FilesWatcher
+    public class NotificationsSender
     {
-        private readonly ILogger<FilesWatcher> _logger;
+        private readonly ILogger<NotificationsSender> _logger;
         private readonly kafkaClient _kafkaClient;
         private readonly ConfigStrings _configStrings;
-        public FilesWatcher(ILogger<FilesWatcher> logger,
+        public NotificationsSender(ILogger<NotificationsSender> logger,
             kafkaClient kafkaClient,
             ConfigStrings configStrings)
         {
@@ -84,6 +84,7 @@ namespace NotificationGate.Services
                 {
                     Console.WriteLine($"Send to kafka: {result.Message.Value}");
                 }
+                Directory.Delete(valueFolder, true);
             }
             //string notificationFile = Path.Combine(valueFolder, "alert.json");
             

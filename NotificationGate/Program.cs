@@ -20,7 +20,7 @@ builder.Services.AddSingleton(sp => new ConfigStrings
     WatchPath = Path.Combine(builder.Environment.ContentRootPath, Environment.GetEnvironmentVariable("WATCH_PATH")!)
 });
 builder.Services.AddSingleton<kafkaClient>();
-builder.Services.AddSingleton<FilesWatcher>();
+builder.Services.AddSingleton<NotificationsSender>();
 
 using IHost host = builder.Build();
 
