@@ -1,6 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel, ValidationError
 import constants
+import elastic_logger
 
 class Notification(BaseModel):
     alert_id: str
@@ -30,5 +31,6 @@ def validate_notification(message:str) -> dict | None:
             raise ValidationError("invalid status")
         return notification_dict
     except ValidationError as err:
+        elastic_logger.log("ERROR", f"invlid object: {err}")
         print("invalid notification, ", err)
         return None
