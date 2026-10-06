@@ -12,5 +12,8 @@ namespace DbSendService.Models
         public string DepthQueuName { get; set; } = "DEPTH";
         public string SouthQueuName { get; set; } = "SOUTH";
         public string CenterQueuName { get; set; } = "CENTER";
+        public string ConnectionString { get; set; } = "mongodb://localhost:27017";
+        public string DatabaseName { get; set; } = "Alerts";
+        public string AlertsCollectionName { get; set; } = "AllAlerts";
     }
 }

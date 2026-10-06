@@ -22,8 +22,12 @@ builder.Services.AddHostedService<SouthService>();
 builder.Services.AddSingleton(sp => new ConfigStrings());
 builder.Services.AddSingleton<ICastomLogger,ElasticLogger>();
 builder.Services.AddSingleton(sp => rabbitConnection);
-builder.Services.AddSingleton<MongoClient>();
+builder.Services.AddSingleton<MongoClientAccess>();
+builder.Services.AddSingleton<AlertProccessor>();
 
 using IHost host = builder.Build();
 
 host.Run();
+
+//MongoClientAccess mongoClientAccess = new(new ConfigStrings());
+//await mongoClientAccess.TryJust();

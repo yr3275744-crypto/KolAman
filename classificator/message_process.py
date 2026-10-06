@@ -7,6 +7,7 @@ import elastic_logger
 import clasificate
 import constants
 import rabbit_sender
+import pika.exceptions
 
 def process(notification_string:str):
     notification_dict = validate_notification(notification_string)
@@ -31,7 +32,7 @@ def process(notification_string:str):
             rabbit_sender.send(e, json.dumps(notification_dict))
             elastic_logger.log("INFO", f"notification {notification_dict["alert_id"]} send to {e}", e)
         print("log send to elastic about rabbit send")
-    except (pyogrio.errors.DataSourceError) as ex:
+    except (pyogrio.errors.DataSourceError, pika.exceptions.StreamLostError) as ex:
         print(ex)
         elastic_logger.log("ERROR", str(ex))
     

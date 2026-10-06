@@ -12,17 +12,17 @@ namespace DbSendService.Models.Dtos
 {
     public class AlertReading
     {
-
-        public string AlertId { get; set; } = string.Empty;
+        [JsonPropertyName("alert_id")]
+        public string? AlertId { get; set; }
 
         [JsonPropertyName("source")]
-        public string Source { get; set; } = string.Empty;
+        public string? Source { get; set; }
 
         [JsonPropertyName("title")]
-        public string Title { get; set; } = string.Empty;
+        public string? Title { get; set; }
 
         [JsonPropertyName("content")]
-        public string Content { get; set; } = string.Empty;
+        public string? Content { get; set; }
 
         [JsonPropertyName("priority")]
         public string? Priority { get; set; }
@@ -31,10 +31,10 @@ namespace DbSendService.Models.Dtos
         public string? Classification { get; set; }
 
         [JsonPropertyName("lat")]
-        public int? Lat { get; set; }
+        public double? Lat { get; set; }
 
         [JsonPropertyName("lon")]
-        public int? Lon { get; set; }
+        public double? Lon { get; set; }
 
         [JsonPropertyName("timestamp")]
         public DateTime? TimeStamp { get; set; }

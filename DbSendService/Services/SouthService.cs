@@ -16,17 +16,20 @@ namespace DbSendService.Services
     {
         private readonly IConnection _rabbitConnection;
         private readonly ICastomLogger _logger;
-        private readonly MongoClient _mongoClient;
+        private readonly MongoClientAccess _mongoClient;
         private readonly ConfigStrings _configStrings;
+        private readonly AlertProccessor _alertProccessor;
         public SouthService(IConnection connection,
             ICastomLogger logger,
-            MongoClient mongoClient,
-            ConfigStrings configStrings)
+            MongoClientAccess mongoClient,
+            ConfigStrings configStrings,
+            AlertProccessor alertProccessor)
         {
             _rabbitConnection = connection;
             _logger = logger;
             _mongoClient = mongoClient;
             _configStrings = configStrings;
+            _alertProccessor = alertProccessor;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -39,15 +42,23 @@ namespace DbSendService.Services
                 Console.WriteLine("South Waiting for messages.");
 
                 var consumer = new AsyncEventingBasicConsumer(channel);
-                consumer.ReceivedAsync += (model, ea) =>
+                consumer.ReceivedAsync += async (model, ea) =>
                 {
-                    var body = ea.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
-                    Console.WriteLine($"South Received {message}");
-                    return Task.CompletedTask;
+                    try
+                    {
+                        var body = ea.Body.ToArray();
+                        var message = Encoding.UTF8.GetString(body);
+                        Console.WriteLine($"Center Received {message}");
+                        await _alertProccessor.Proccess(message, Enums.RelevantHeadquartersValues.SOUTH);
+                        await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 };
 
-                await channel.BasicConsumeAsync(_configStrings.SouthQueuName, autoAck: true, consumer: consumer);
+                await channel.BasicConsumeAsync(_configStrings.SouthQueuName, autoAck: false, consumer: consumer);
 
                 Console.WriteLine(" Press [enter] to exit.");
                 Console.ReadLine();

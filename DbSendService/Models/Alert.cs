@@ -36,19 +36,21 @@ namespace DbSendService.Models
         public ClassificationLevel Classification { get; set; }
 
         [JsonPropertyName("lat")]
-        public int? Lat { get; set; }
+        public double Lat { get; set; }
 
         [JsonPropertyName("lon")]
-        public int? Lon { get; set; }
+        public double Lon { get; set; }
 
         [JsonPropertyName("timestamp")]
-        public DateTime? TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         [JsonPropertyName("status")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public StatusLevel Status { get; set; }
 
-        public DateTime? DetectedAt { get; set; }
-        public RelevantHeadquartersValues Headquarter { get; set; }
+        public DateTime DetectedAt { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public string Headquarter { get; set; } = string.Empty;
     }
 }
