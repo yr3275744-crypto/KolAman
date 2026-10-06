@@ -23,3 +23,7 @@ level_values= ["INFO", "WARNING", "ERROR", "CRITICAL"]
 
 #rabbit
 rabbit_host="localhost"
+north_queue= "NORTH"
+center_queue= "CENTER"
+south_queue= "SOUTH"
+depth_queue= "DEPTH"

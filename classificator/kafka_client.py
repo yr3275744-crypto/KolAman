@@ -3,6 +3,7 @@ import socket
 import constants
 import json
 from message_process import process
+import elastic_logger
 conf = {'bootstrap.servers': constants.bootstrap_servers,
         'group.id': 'foo',
         'auto.offset.reset': 'earliest'}
@@ -28,7 +29,8 @@ def consume_loop(consumer = consumer, topics = [constants.raw_notifications_topi
                 try:
                     process(message)
                 except TypeError as e:
-                    print ("error in proceess messaga,", e)
+                    print ("error in proceess message,", e)
+                    elastic_logger.log("ERROR", f"error in proceess message: {e}")
     except KeyboardInterrupt:
         pass
     finally:
