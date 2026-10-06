@@ -1,4 +1,7 @@
-﻿using DbSendService.Services;
+﻿using DbSendService.DAL;
+using DbSendService.Loggers;
+using DbSendService.Models;
+using DbSendService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -11,4 +14,16 @@ IConnection rabbitConnection = await factory.CreateConnectionAsync();
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddHostedService<Worker>();
+//builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<CenterService>();
+builder.Services.AddHostedService<DepthService>();
+builder.Services.AddHostedService<NorthService>();
+builder.Services.AddHostedService<SouthService>();
+builder.Services.AddSingleton(sp => new ConfigStrings());
+builder.Services.AddSingleton<ICastomLogger,ElasticLogger>();
+builder.Services.AddSingleton(sp => rabbitConnection);
+builder.Services.AddSingleton<MongoClient>();
+
+using IHost host = builder.Build();
+
+host.Run();

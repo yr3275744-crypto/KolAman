@@ -12,6 +12,7 @@ namespace DbSendService.Models.Dtos
 {
     public class AlertReading
     {
+
         public string AlertId { get; set; } = string.Empty;
 
         [JsonPropertyName("source")]

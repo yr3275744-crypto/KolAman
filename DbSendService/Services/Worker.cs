@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace DbSendService.Services
 {
-    public class Worker : BackgroundService
-    {
+    //public class Worker : BackgroundService
+    //{
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
+    //    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    //    {
+    //        while (!stoppingToken.IsCancellationRequested)
+    //        {
                 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 }

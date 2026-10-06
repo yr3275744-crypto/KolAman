@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace DbSendService.Models
 {
-    internal class ConfigStrings
+    public class ConfigStrings
     {
+        public string NorthQueuName { get; set; } = "NORTH";
+        public string DepthQueuName { get; set; } = "DEPTH";
+        public string SouthQueuName { get; set; } = "SOUTH";
+        public string CenterQueuName { get; set; } = "CENTER";
     }
 }

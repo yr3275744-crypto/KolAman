@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DbSendService.Loggers
 {
-    public class ElasticLogger
+    public class ElasticLogger : ICastomLogger
     {
     }
 }

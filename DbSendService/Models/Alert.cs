@@ -49,5 +49,6 @@ namespace DbSendService.Models
         public StatusLevel Status { get; set; }
 
         public DateTime? DetectedAt { get; set; }
+        public RelevantHeadquartersValues Headquarter { get; set; }
     }
 }
