@@ -1,4 +1,4 @@
-﻿using DbSendService.Enums;
+﻿using CommandCenter.Enums;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DbSendService.Models
+namespace CommandCenter.Models
 {
     public class Alert
     {

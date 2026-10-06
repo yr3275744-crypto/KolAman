@@ -23,19 +23,11 @@ namespace DbSendService.Services
             try
             {
                 AlertReading? reading = JsonSerializer.Deserialize<AlertReading>(message);
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
-            //AlertReading? reading = JsonSerializer.Deserialize<AlertReading>(message);
-            if (reading == null)
-            {
-                Console.WriteLine("fail to serialize alert");
-                return;
-            }
-            //try
-            //{
+                if (reading == null)
+                {
+                    Console.WriteLine("fail to serialize alert");
+                    return;
+                }
                 await _clientAccess.Send(reading, headquarter);
             }
             catch (Exception e)

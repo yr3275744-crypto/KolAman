@@ -28,6 +28,3 @@ builder.Services.AddSingleton<AlertProccessor>();
 using IHost host = builder.Build();
 
 host.Run();
-
-//MongoClientAccess mongoClientAccess = new(new ConfigStrings());
-//await mongoClientAccess.TryJust();
